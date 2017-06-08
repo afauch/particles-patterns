@@ -1,5 +1,5 @@
 
-			var SEPARATION = 100, AMOUNTX = 50, AMOUNTY = 50;
+			var SEPARATION = 100, AMOUNTX = 10, AMOUNTY = 10;
 
 			var container, stats;
 			var camera, scene, renderer;
@@ -139,15 +139,42 @@
 
 				var i = 0;
 
+				// rows
 				for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
 
+					// for every row
+
+					// columns
 					for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
 
+						// for every particle in this row
+
+						// increment i; this is the particle I am referring to
+
 						particle = particles[ i++ ];
-						particle.position.y = ( Math.sin( ( ix + count ) * 0.3 ) * 50 ) +
-							( Math.sin( ( iy + count ) * 0.5 ) * 50 );
-						particle.scale.x = particle.scale.y = ( Math.sin( ( ix + count ) * 0.3 ) + 1 ) * 4 +
-							( Math.sin( ( iy + count ) * 0.5 ) + 1 ) * 4;
+						
+						var coeffA = 0.5;	// both affect speed and magnitude
+						var coeffB = 25;	// both affect speed and magnitude
+
+						var xWeight = Math.sin( ( ix + count ) ); // these values modulate between -1 and 1
+						var yWeight = Math.sin( ( iy + count ) ); // these values modulate between -1 and 1
+
+						// console.log("xWeight " + xWeight + "yWeight " + yWeight);
+
+						// Original
+						particle.position.y =
+						( ( xWeight * coeffA ) * coeffB )
+						+
+						( ( yWeight * coeffA ) * coeffB );
+
+						particle.scale.x = 1;
+						particle.scale.y = 10;
+
+						// what is i?
+						// there's no "roof" to i
+						// ix is the indicator of 
+
+						// particle.position.y = DATA.samples[iy];
 
 					}
 
@@ -155,6 +182,6 @@
 
 				renderer.render( scene, camera );
 
-				count += 0.1;
+				count += 0.1; // this is essentially another speed constant
 
 			}
